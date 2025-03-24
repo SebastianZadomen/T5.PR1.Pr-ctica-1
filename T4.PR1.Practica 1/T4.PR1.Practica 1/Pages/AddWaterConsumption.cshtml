@@ -1,0 +1,51 @@
+﻿@page
+@model AddWaterConsumptionModel
+@{
+    ViewData["Title"] = "Afegir Consum d'Aigua";
+}
+
+<h2 class="text-center">Afegir Consum d'Aigua</h2>
+
+<form method="post" class="form p-4">
+    <div class="mb-3">
+        <label for="Consum_Any" class="form-label">Any:</label>
+        <input asp-for="Consum.Any" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_CodiComarca" class="form-label">Codi Comarca:</label>
+        <input asp-for="Consum.CodiComarca" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_Comarca" class="form-label">Comarca:</label>
+        <input asp-for="Consum.Comarca" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_Poblacio" class="form-label">Població:</label>
+        <input asp-for="Consum.Poblacio" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_DomesticXarxa" class="form-label">Domèstic Xarxa:</label>
+        <input asp-for="Consum.DomesticXarxa" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_ActivitatsEconomiques" class="form-label">Activitats Econòmiques:</label>
+        <input asp-for="Consum.ActivitatsEconomiques" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_Total" class="form-label">Total:</label>
+        <input asp-for="Consum.Total" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Consum_ConsumPerCapita" class="form-label">Consum Domèstic per Càpita:</label>
+        <input asp-for="Consum.ConsumPerCapita" type="number" step="0.01" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Afegir</button>
+</form>

@@ -1,0 +1,133 @@
+﻿    @page
+    @model T4.PR1.Practica_1.Pages.ShowIndicadorsEnergeModel
+    @{
+        ViewData["Title"] = "Indicadors Energètics";
+    }
+
+    <h1>Indicadors Energètics</h1>
+
+    <p>Total de registres: <strong>@Model.TotalRegistros</strong></p>
+
+    @if (Model.TotalRegistros == 0)
+    {
+        <p>No hi ha cap registre disponible.</p>
+    }
+    else
+    {
+        <h2>Llista Completa</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Prod. Neta</th>
+                    <th>Gasolina Auto</th>
+                    <th>Prod. Bruta</th>
+                    <th>Demanda Electrica</th>
+                    <th>Prod. Disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.IndicadoresEnergeticos)
+                {
+                    <tr>
+                        <td>@item.Data</td>
+                        <td>@item.CDEEBC_ProdNeta</td>
+                        <td>@item.CCAC_GasolinaAuto</td>
+                        <td>@item.CDEEBC_ProdBruta</td>
+                        <td>@item.CDEEBC_DemandaElectr</td>
+                        <td>@item.CDEEBC_ProdDisp</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    <h2>Estadístiques</h2>
+
+    <h3>Producció neta superior a 3000 (ascendent):</h3>
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Producció Neta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProdNetaMayor3000)
+            {
+                    <tr>
+                        <td>@item.Data</td>
+                        <td>@item.CDEEBC_ProdNeta</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Consum de gasolina superior a 100 (descendent):</h3>
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Consum de Gasolina</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.GasolinaMayor100)
+            {
+                    <tr>
+                        <td>@item.Data</td>
+                        <td>@item.CCAC_GasolinaAuto</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Mitjana de producció neta per any (ascendent):</h3>
+       <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Any</th>
+                <th>Mitjana de Producció Neta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MediaProduccionNeta)
+            {
+                    <tr>
+                        <td>@item.Año</td>
+                        <td>@item.Promedio.ToString("F2")</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Demanda elèctrica > 4000 i producció disponible > 300:</h3>
+        @if (Model.DemandaAltaBajaProduccion.Any())
+        {
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Demanda Elèctrica</th>
+                            <th>Producció Disponible</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.DemandaAltaBajaProduccion)
+                    {
+                                <tr>
+                                    <td>@item.Data</td>
+                                    <td>@item.CDEEBC_DemandaElectr</td>
+                                    <td>@item.CDEEBC_ProdDisp</td>
+                                </tr>
+                    }
+                    </tbody>
+                </table>
+        }
+        else
+        {
+                <p>No hay datos.</p>
+        }
+    }
+
+    <br />
+    <a asp-page="/AddIndicadorEnergeModel" class="btn btn-success">Afegir Nou Indicador</a>

@@ -1,0 +1,33 @@
+﻿@page
+@model T4.PR1.Practica_1.Pages.AddIndicadorEnergeModel
+@{
+    ViewData["Title"] = "Afegir Indicador Energètic";
+}
+
+<h1>Afegir Indicador Energètic</h1>
+
+<form method="post" class="form">
+    <div>
+        <label>Data (YYYY-MM-DD):</label>
+        <input asp-for="NuevoIndicador.Data" class="form-control" type="date" required />
+    </div>
+    <div>
+        <label>Producció Neta (CDEEBC_ProdNeta):</label>
+        <input asp-for="NuevoIndicador.CDEEBC_ProdNeta" class="form-control" type="number" step="0.01" required />
+    </div>
+    <div>
+        <label>Consum Gasolina Auto (CCAC_GasolinaAuto):</label>
+        <input asp-for="NuevoIndicador.CCAC_GasolinaAuto" class="form-control" type="number" step="0.01" required />
+    </div>
+    <div>
+        <label>Demanda Elèctrica (CDEEBC_DemandaElectr):</label>
+        <input asp-for="NuevoIndicador.CDEEBC_DemandaElectr" class="form-control" type="number" step="0.01" required />
+    </div>
+    <div>
+        <label>Producció Disponible (CDEEBC_ProdDisp):</label>
+        <input asp-for="NuevoIndicador.CDEEBC_ProdDisp" class="form-control" type="number" step="0.01" required />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Afegir</button>
+    <a asp-page="/ShowIndicadorsEnergeModel" class="btn btn-secondary">Tornar</a>
+</form>

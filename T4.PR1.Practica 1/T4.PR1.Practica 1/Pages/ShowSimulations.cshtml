@@ -1,0 +1,50 @@
+﻿@page
+@model ShowSimulationsModel
+@{
+    ViewData["Title"] = "Simulaciones";
+}
+
+<h2>Simulacions Realitzades</h2>
+
+@if (Model.Simulations.Any())
+
+{
+             <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                     <th>Tipus</th>
+                    <th>Energía Generada (kWh)</th>
+                    <th>Cost/kWh (€)</th>
+                    <th>Preu/kWh (€)</th>
+                    <th>Cost Total (€)</th>
+                    <th>Preu Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var sim in Model.Simulations)
+
+            {
+                    <tr>
+                        <td>@sim.Date</td>
+                        <td>@sim.SystemType</td>
+                        <td>@sim.EnergyGenerated</td>
+                        <td>@sim.CostPerKWh</td>
+                        <td>@sim.PricePerKWh</td>
+                        <td>@sim.TotalCost</td>
+                        <td>@sim.TotalPrice</td>
+                    </tr>
+            }
+            </tbody>
+        </table>
+        <p>Total de simulaciones: @Model.Simulations.Count</p>
+}
+
+else
+
+{
+            <p>
+    No existen simulaciones registradas.</p>
+}
+
+    <a asp-page="AddSimulation"class="btn btn-success">Afegir Nou Simulacio</a>
