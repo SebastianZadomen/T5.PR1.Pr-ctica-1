@@ -136,13 +136,10 @@ Ahora, todo se almacena en una base de datos con EF Core, y los archivos solo se
 En el anterior, para leer datos había que abrir los archivos y procesarlos manualmente. Por ejemplo, en ShowIndicadorsEnergeModel:
 
 ```csharp
-
 var lineas = System.IO.File.ReadAllLines(CsvPath);
-
 foreach (var linea in lineas.Skip(1)) { /\* Procesar datos \*/ }
 ```
-
-\\O para el XML:
+O para el XML:
 
 ```csharp
 XDocument doc = XDocument.Load(rutaXML);
