@@ -17,6 +17,7 @@ En el archivo `Program.cs` del proyecto nuevo, hay una línea que parece esencia
 builder.Services.AddDbContext<EcoEnergyDbContext>(options =>
 
 options.UseSqlServer(builder.Configuration.GetConnectionString("EcoEnergyDatabase")));
+```
 
 Esto configura el programa para usar una base de datos SQL Server con una conexión que está en el archivo de configuración. Más abajo, se inicializa la base de datos con:
 
