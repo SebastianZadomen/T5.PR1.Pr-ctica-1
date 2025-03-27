@@ -24,6 +24,7 @@ Esto configura el programa para usar una base de datos SQL Server con una conexi
 ```csharp
 
 DbInitializer.Initialize(context);
+```
 
 Por lo que entiendo, esto crea la base de datos y carga datos al arrancar.
 
@@ -31,13 +32,14 @@ Por lo que entiendo, esto crea la base de datos y carga datos al arrancar.
 
 Existe una clase nueva llamada EcoEnergyDbContext que parece ser el núcleo de EF Core en este proyecto. Incluye unas propiedades para las entidades que se van a guardar:
 
-\```csharp
+```csharp
 
 public DbSet<SimulationBD> Simulations { get; set; }
 
 public DbSet<WaterConsumptionBD> WaterConsumptions { get; set; }
 
 public DbSet<EnergyIndicatorBD> EnergyIndicators { get; set; }
+```
 
 Esto parece indicar a EF Core qué tablas debe manejar. También hay un método OnModelCreating que establece reglas, como limitar la longitud de un campo o hacerlo obligatorio.
 
@@ -62,14 +64,16 @@ public int Year { get; set; }
 public double NetProduction { get; set; }
 
 }
+```
 
 Esto parece ayudar a EF Core a crear las tablas y evitar datos incorrectos. Para guardar algo, se usa el contexto así:
 
-\```csharp
+```csharp
 
-\_context.EnergyIndicators.Add(NuevoIndicador);
+_context.EnergyIndicators.Add(NuevoIndicador);
 
-\_context.SaveChanges();
+_context.SaveChanges();
+```
 
 Y con eso los datos se almacenan en la base de datos.
 
@@ -77,7 +81,7 @@ Y con eso los datos se almacenan en la base de datos.
 
 Hay controladores como EnergyIndicatorsController que funcionan como una API. Por ejemplo, para obtener todos los indicadores:
 
-\```csharp
+```csharp
 
 [HttpGet]
 
@@ -88,6 +92,7 @@ public async Task<ActionResult<IEnumerable<EnergyIndicatorBD>>> GetEnergyIndicat
 return await \_context.EnergyIndicators.ToListAsync();
 
 }
+```
 
 Esto parece permitir que se pidan datos desde fuera por internet, algo que no existía antes.
 
@@ -95,11 +100,12 @@ Esto parece permitir que se pidan datos desde fuera por internet, algo que no ex
 
 La clase DbInitializer toma datos de archivos CSV, como indicadors\_energetics\_cat.csv, y los inserta en la base de datos al inicio:
 
-\```csharp
+```csharp
 
 context.EnergyIndicators.AddRange(records);
 
 context.SaveChanges();
+```
 
 Esto parece práctico para empezar con datos ya cargados.
 
@@ -109,17 +115,19 @@ Esto parece práctico para empezar con datos ya cargados.
 
 Antes, todo se guardaba en archivos. Los indicadores estaban en indicadors\_energetics\_cat.csv y .json, las simulaciones en simulaciones\_energia.csv, y los consumos de agua en un CSV y un XML. Para añadir un indicador, se escribía en el CSV:
 
-\```csharp
+```csharp
 
 System.IO.File.AppendAllText(CsvPath, "\n" + newLine);
+```
 
 O en el XML para el agua:
 
-\```csharp
+```csharp
 
 doc.Root.Add(element);
 
 doc.Save(rutaXML);
+```
 
 Ahora, todo se almacena en una base de datos con EF Core, y los archivos solo se usan al principio para cargar datos.
 
@@ -127,23 +135,23 @@ Ahora, todo se almacena en una base de datos con EF Core, y los archivos solo se
 
 En el anterior, para leer datos había que abrir los archivos y procesarlos manualmente. Por ejemplo, en ShowIndicadorsEnergeModel:
 
-\```csharp
+```csharp
 
 var lineas = System.IO.File.ReadAllLines(CsvPath);
 
 foreach (var linea in lineas.Skip(1)) { /\* Procesar datos \*/ }
 
-O para el XML:
-
-
+\\O para el XML:
 
 XDocument doc = XDocument.Load(rutaXML);
+```
 
 Era un proceso manual y algo complicado. Ahora, con EF Core, solo se escribe:
 
 \```csharp
 
 IndicadoresEnergeticos = \_context.EnergyIndicators.ToList();
+```
 
 Y la base de datos se encarga del resto.
 
@@ -160,6 +168,7 @@ En el anterior, había clases como HydroelectricSystem que calculaban la energí
 sistema.Simulate(Parametro);
 
 SimulationDataHandler.SaveSimulation(simulacion);
+```
 
 Ahora, eso se hace directamente en AddSimulationModel y se guarda en la base de datos:
 
@@ -168,5 +177,6 @@ Ahora, eso se hace directamente en AddSimulationModel y se guarda en la base de 
 Simulation.GeneratedEnergy = Simulation.Type switch { /\* Cálculo \*/ };
 
 \_context.Simulations.Add(Simulation);
+```
 
 Las clases complejas ya no están, y todo parece más directo.
