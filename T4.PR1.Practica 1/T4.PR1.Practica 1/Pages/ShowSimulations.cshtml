@@ -1,7 +1,7 @@
 ﻿@page
-@model ShowSimulationsModel
+@model T5.PR1.Practica_1.Pages.ShowSimulationsModel
 @{
-    ViewData["Title"] = "Simulaciones";
+    ViewData["Title"] = "Simulacions";
 }
 
 <h2>Simulacions Realitzades</h2>
@@ -9,42 +9,39 @@
 @if (Model.Simulations.Any())
 
 {
-             <table class="table table-striped">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Data</th>
-                     <th>Tipus</th>
-                    <th>Energía Generada (kWh)</th>
-                    <th>Cost/kWh (€)</th>
-                    <th>Preu/kWh (€)</th>
-                    <th>Cost Total (€)</th>
-                    <th>Preu Total (€)</th>
+                    <th>Tipus</th>
+                    <th>Hores Sol</th>
+                    <th>Velocitat Vent</th>
+                    <th>Energia Generada</th>
+                    <th>Cost per kWh</th>
                 </tr>
             </thead>
             <tbody>
             @foreach (var sim in Model.Simulations)
 
             {
-                    <tr>
-                        <td>@sim.Date</td>
-                        <td>@sim.SystemType</td>
-                        <td>@sim.EnergyGenerated</td>
-                        <td>@sim.CostPerKWh</td>
-                        <td>@sim.PricePerKWh</td>
-                        <td>@sim.TotalCost</td>
-                        <td>@sim.TotalPrice</td>
-                    </tr>
+                        <tr>
+                            <td>@sim.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@sim.Type</td>
+                            <td>@sim.SunHours</td>
+                            <td>@sim.WindSpeed.ToString("N2")</td>
+                            <td>@sim.GeneratedEnergy.ToString("N2")</td>
+                            <td>@sim.CostPerKWh.ToString("N2") €</td>
+                        </tr>
             }
             </tbody>
         </table>
-        <p>Total de simulaciones: @Model.Simulations.Count</p>
+        <p>Total de simulacions: @Model.Simulations.Count</p>
 }
 
 else
 
 {
-            <p>
-    No existen simulaciones registradas.</p>
+        <p>No hi ha simulacions registrades.</p>
 }
 
-    <a asp-page="AddSimulation"class="btn btn-success">Afegir Nou Simulacio</a>
+<a asp-page="AddSimulation" class="btn btn-success">Afegir Nova Simulació</a>

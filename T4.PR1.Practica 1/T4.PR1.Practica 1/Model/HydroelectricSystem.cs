@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using T4.PR1.Practica_1;
-namespace T4.PR1.Practica_1
+using T5.PR1.Practica_1;
+namespace T5.PR1.Practica_1
 {
     public class HydroelectricSystem : EnergySystem
     {

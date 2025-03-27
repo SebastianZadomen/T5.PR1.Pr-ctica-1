@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace T4.PR1.Practica_1.Model
+namespace T5.PR1.Practica_1.Model
 {
     public class WaterConsumptionBD
     {

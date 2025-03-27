@@ -1,33 +1,44 @@
 ﻿@page
-@model AddSimulationModel
+@model T5.PR1.Practica_1.Pages.AddSimulationModel
 @{
-    ViewData["Title"] = "Añadir Simulación";
+    ViewData["Title"] = "Afegir Simulació";
 }
 
-<h2 class="text-center">Añadir Nueva Simulación</h2>
+<h1>Afegir Nova Simulació</h1>
 
-<form method="post" class="form p-4">
-    <div class="mb-3">
-        <label for="TipoSistema" class="form-label">Tipo de Sistema:</label>
-        <select asp-for="TipoSistema" asp-items="Model.TiposDeEnergia" class="form-select" required>
-            <option value="">-- Selecciona una opción --</option>
+<form method="post" class="form">
+    <div class="form-group">
+        <label asp-for="Simulation.Type" class="control-label">Tipus de Sistema:</label>
+        <select asp-for="Simulation.Type" class="form-control" asp-items="Model.TiposDeEnergia" required>
+            <option value="">-- Selecciona un tipus --</option>
         </select>
+        <span asp-validation-for="Simulation.Type" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label for="Parametro" class="form-label">Valor del Parámetro:</label>
-        <input type="number" asp-for="Parametro" class="form-control" step="0.01" min="0.1" max="3.0" required />
+    <div class="form-group">
+        <label asp-for="Simulation.SunHours" class="control-label">Hores de Sol:</label>
+        <input asp-for="Simulation.SunHours" class="form-control" type="number" min="0" max="24" required />
+        <span asp-validation-for="Simulation.SunHours" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label for="CostoPorKWh" class="form-label">Costo por kWh (€):</label>
-        <input type="number" asp-for="CostoPorKWh" class="form-control" step="0.01" required />
+    <div class="form-group">
+        <label asp-for="Simulation.WindSpeed" class="control-label">Velocitat del Vent (km/h):</label>
+        <input asp-for="Simulation.WindSpeed" class="form-control" type="number" step="0.1" min="0" required />
+        <span asp-validation-for="Simulation.WindSpeed" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label for="PrecioPorKWh" class="form-label">Precio por kWh (€):</label>
-        <input type="number" asp-for="PrecioPorKWh" class="form-control" step="0.01" required />
+    <div class="form-group">
+        <label asp-for="Simulation.WaterFlow" class="control-label">Cabal d'Aigua (m³/s):</label>
+        <input asp-for="Simulation.WaterFlow" class="form-control" type="number" step="0.1" min="0" required />
+        <span asp-validation-for="Simulation.WaterFlow" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Añadir Simulación</button>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Simular</button>
+        <a asp-page="/ShowSimulations" class="btn btn-secondary">Cancel·lar</a>
+    </div>
 </form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

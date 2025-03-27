@@ -1,24 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics;
-using System.Xml.Linq;
-using T4.PR1.Practica_1;
-namespace T4.PR1.Practica_1.Pages
+using T5.PR1.Practica_1.Data;
+using T5.PR1.Practica_1.Model;
+
+namespace T5.PR1.Practica_1.Pages
 {
     public class AddSimulationModel : PageModel
     {
-        [BindProperty]
-        public string TipoSistema { get; set; } = "";
+        private readonly EcoEnergyDbContext _context;
 
         [BindProperty]
-        public double Parametro { get; set; }
-
-        [BindProperty]
-        public double CostoPorKWh { get; set; }
-
-        [BindProperty]
-        public double PrecioPorKWh { get; set; }
+        public SimulationBD Simulation { get; set; } = new(); 
 
         public List<SelectListItem> TiposDeEnergia { get; } = new()
         {
@@ -27,36 +20,29 @@ namespace T4.PR1.Practica_1.Pages
             new SelectListItem { Value = "Eolic", Text = "Eólico" }
         };
 
+        public AddSimulationModel(EcoEnergyDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
                 return Page();
 
-            EnergySystem sistema = TipoSistema switch
+            // Calcula la energía generada según el tipo
+            Simulation.GeneratedEnergy = Simulation.Type switch
             {
-                "Hydroelectric" => new HydroelectricSystem(),
-                "Solar" => new SolarSystem(),
-                "Eolic" => new WindSystem(),
-                _ => throw new InvalidOperationException("Tipo de sistema no válido")
+                "Hydroelectric" => Simulation.WaterFlow * 50,
+                "Solar" => Simulation.SunHours * 10,
+                "Eolic" => Simulation.WindSpeed * 5,
+                _ => 0
             };
 
-            sistema.Simulate(Parametro);
+            Simulation.Date = DateTime.Now;
 
-            double costoTotal = sistema.EnergyGenerated * CostoPorKWh;
-            double precioTotal = sistema.EnergyGenerated * PrecioPorKWh;
-
-            var simulacion = new SimulationResult
-            {
-                Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                SystemType = TipoSistema,
-                EnergyGenerated = sistema.EnergyGenerated,
-                CostPerKWh = CostoPorKWh,
-                PricePerKWh = PrecioPorKWh,
-                TotalCost = costoTotal,
-                TotalPrice = precioTotal
-            };
-
-            SimulationDataHandler.SaveSimulation(simulacion);
+            _context.Simulations.Add(Simulation);
+            _context.SaveChanges();
 
             return RedirectToPage("ShowSimulations");
         }
