@@ -12,15 +12,15 @@ namespace T5.PR1.Practica_1.Model
 
         [Required]
         [Range(0, 24)]
-        public int SunHours { get; set; }
+        public double? SunHours { get; set; } = 0;
 
         [Required]
         [Range(0, 200)]
-        public double WindSpeed { get; set; }
+        public double? WindSpeed { get; set; } = 0;
 
         [Required]
         [Range(0, 5000)]
-        public double WaterFlow { get; set; }
+        public double? WaterFlow { get; set; } = 0;
 
         [Required]
         [Range(0.1, 0.3)]

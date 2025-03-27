@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Globalization;
-using System.Xml.Linq;
-using T5.PR1.Practica_1.Model;
-using CsvHelper;
-using CsvHelper.Configuration;
 using T5.PR1.Practica_1.Data;
+using T5.PR1.Practica_1.Model;
 
 namespace T5.PR1.Practica_1.Pages
 {

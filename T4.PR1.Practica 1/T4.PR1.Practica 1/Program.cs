@@ -13,50 +13,27 @@ namespace T5.PR1.Practica_1
             builder.Services.AddDbContext<EcoEnergyDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("EcoEnergyDatabase")));
 
-            builder.Services.AddHttpClient("EcoEnergyAPI", client =>
-            {
-                client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            });
+           
+            builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
 
-            builder.Services.AddEndpointsApiExplorer();
+            // Configurar Swagger
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "EcoEnergy API",
-                    Version = "v1",
-                    Description = "API para gestión de datos energéticos"
+                    Version = "v1"
                 });
             });
-
-            builder.Services.AddRazorPages();
-            builder.Services.AddControllers();
 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage(); 
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoEnergy API v1");
-                });
-
-                using (var scope = app.Services.CreateScope())
-                {
-                    var services = scope.ServiceProvider;
-                    try
-                    {
-                        var context = services.GetRequiredService<EcoEnergyDbContext>();
-                        DbInitializer.Initialize(context); 
-                    }
-                    catch (Exception ex)
-                    {
-                        var logger = services.GetRequiredService<ILogger<Program>>();
-                        logger.LogError(ex, "Error durante la inicialización de datos");
-                    }
-                }
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoEnergy API v1"));
             }
             else
             {
@@ -72,15 +49,14 @@ namespace T5.PR1.Practica_1
             app.MapRazorPages();
             app.MapControllers();
 
+
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
                     var context = services.GetRequiredService<EcoEnergyDbContext>();
-                    context.Database.EnsureDeleted(); 
-                    context.Database.EnsureCreated();
-                    DbInitializer.Initialize(context);
+                    DbInitializer.Initialize(context); 
                 }
                 catch (Exception ex)
                 {
@@ -93,4 +69,3 @@ namespace T5.PR1.Practica_1
         }
     }
 }
- 

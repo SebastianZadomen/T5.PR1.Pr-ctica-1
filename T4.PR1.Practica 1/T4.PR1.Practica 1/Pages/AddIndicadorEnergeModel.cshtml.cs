@@ -34,7 +34,36 @@ namespace T5.PR1.Practica_1.Pages
             _context.EnergyIndicators.Add(NuevoIndicador);
             _context.SaveChanges();
 
-            return RedirectToPage("ShowIndicadorsEnerge");
+            return RedirectToPage("ShowIndicadorsEnergeModel");
         }
+        private void RecalcularEstadisticas()
+        {
+            
+            var prodNetaMayor3000 = _context.EnergyIndicators
+                .Where(x => x.NetProduction > 3000)
+                .OrderBy(x => x.NetProduction)
+                .ToList();
+
+            var gasolinaMayor100 = _context.EnergyIndicators
+                .Where(x => x.GasolineConsumption > 100)
+                .OrderByDescending(x => x.GasolineConsumption)
+                .ToList();
+
+            var mediaProduccionNeta = _context.EnergyIndicators
+                .GroupBy(x => x.Year)
+                .Select(g => new ShowIndicadorsEnergeModel.MediaProduccionPorAno
+                {
+                    Año = g.Key,
+                    Promedio = g.Average(x => x.NetProduction)
+                })
+                .OrderBy(x => x.Año)
+                .ToList();
+
+            var demandaAltaBajaProduccion = _context.EnergyIndicators
+                .Where(x => x.ElectricDemand > 4000 && x.AvailableProduction < 300)
+                .ToList();
+
+        }
+
     }
 }

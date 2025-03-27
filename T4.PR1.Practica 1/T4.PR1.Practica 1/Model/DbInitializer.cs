@@ -18,9 +18,7 @@ namespace T5.PR1.Practica_1.Data
                 Console.WriteLine("[DbInitializer] Base de datos verificada/creada");
 
                 LoadEnergyData(context);
-
                 LoadWaterData(context);
-
                 LoadSimulationData(context);
 
                 Console.WriteLine("[DbInitializer] Inicialización completada con éxito");
@@ -41,7 +39,7 @@ namespace T5.PR1.Practica_1.Data
             {
                 Console.WriteLine("[DbInitializer] Cargando datos de EnergyIndicators...");
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "ModelData", "indicadors_energetics_cat.csv");
-                Console.WriteLine($"[DbInitializer] Ruta del archivo: {filePath}");
+                Console.WriteLine($"[DbInitializer] Ruta del archivo: {Path.GetFullPath(filePath)}");
 
                 if (File.Exists(filePath))
                 {
@@ -53,14 +51,12 @@ namespace T5.PR1.Practica_1.Data
                             HasHeaderRecord = true,
                             MissingFieldFound = null,
                             HeaderValidated = null,
-                            BadDataFound = context =>
-                                Console.WriteLine($"[DbInitializer] Dato inválido en fila {context.Context.Parser.Row}")
+                            BadDataFound = args => Console.WriteLine($"[DbInitializer] Dato inválido en fila {args.Context.Parser.Row}")
                         };
 
                         using var reader = new StreamReader(filePath);
                         using var csv = new CsvReader(reader, config);
-                        csv.Context.RegisterClassMap<T4.PR1.Practica_1.Mapping.EnergyIndicatorBDMap>();
-
+                        csv.Context.RegisterClassMap<T5.PR1.Practica_1.Model.EnergyIndicatorBDMap>();
                         var records = csv.GetRecords<EnergyIndicatorBD>().ToList();
                         Console.WriteLine($"[DbInitializer] Registros leídos: {records.Count}");
 
@@ -71,12 +67,21 @@ namespace T5.PR1.Practica_1.Data
                     catch (Exception ex)
                     {
                         Console.WriteLine($"[DbInitializer] Error al cargar EnergyIndicators: {ex.Message}");
+                
+                        if (ex is ReaderException readerEx && readerEx.Context != null)
+                        {
+                            Console.WriteLine($"[DbInitializer] Error en CSV: Fila {readerEx.Context.Parser.Row}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[DbInitializer] No se pudo determinar la fila exacta del error.");
+                        }
                         throw;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("[DbInitializer] Archivo CSV de EnergyIndicators no encontrado!");
+                    Console.WriteLine($"[DbInitializer] Archivo CSV no encontrado en: {filePath}");
                 }
             }
             else
@@ -103,13 +108,11 @@ namespace T5.PR1.Practica_1.Data
                             HasHeaderRecord = true,
                             MissingFieldFound = null,
                             HeaderValidated = null,
-                            BadDataFound = context =>
-                                Console.WriteLine($"[DbInitializer] Dato inválido en fila {context.Context.Parser.Row}")
+                            BadDataFound = args => Console.WriteLine($"[DbInitializer] Dato inválido en fila {args.Context.Parser.Row}")
                         };
 
                         using var reader = new StreamReader(filePath);
                         using var csv = new CsvReader(reader, config);
-
                         csv.Context.RegisterClassMap<T4.PR1.Practica_1.Mapping.WaterConsumptionBDMap>();
 
                         var records = csv.GetRecords<WaterConsumptionBD>().ToList();
@@ -150,12 +153,11 @@ namespace T5.PR1.Practica_1.Data
                     {
                         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
-                            Delimiter = ";", 
+                            Delimiter = ";",
                             HasHeaderRecord = true,
                             MissingFieldFound = null,
                             HeaderValidated = null,
-                            BadDataFound = context =>
-                                Console.WriteLine($"[DbInitializer] Dato inválido en fila {context.Context.Parser.Row}")
+                            BadDataFound = args => Console.WriteLine($"[DbInitializer] Dato inválido en fila {args.Context.Parser.Row}")
                         };
 
                         using var reader = new StreamReader(filePath);

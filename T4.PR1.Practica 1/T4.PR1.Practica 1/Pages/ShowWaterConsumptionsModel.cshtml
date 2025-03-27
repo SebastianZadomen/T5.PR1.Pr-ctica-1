@@ -25,15 +25,17 @@ else
             <tbody>
             @foreach (var c in Model.Consums)
             {
-                        <tr>
-                            <td>@c.Year</td>
-                            <td>@c.Region</td>
-                            <td>@c.Municipality</td>
-                            <td>@c.Consumption.ToString("N2") m³</td>
-                        </tr>
+                    <tr>
+                        <td>@c.Year</td>
+                        <td>@c.Region</td>
+                        <td>@c.Municipality</td>
+                        <td>@c.Consumption.ToString("N2") m³</td>
+                    </tr>
             }
             </tbody>
         </table>
 }
 
-<a asp-page="/AddWaterConsumption" class="btn btn-success">Afegir Nou Consum</a>
+<div style="margin-top: 20px;">
+    <a asp-page="/AddWaterConsumption" class="btn btn-success">Afegir Nou Consum</a>
+</div>

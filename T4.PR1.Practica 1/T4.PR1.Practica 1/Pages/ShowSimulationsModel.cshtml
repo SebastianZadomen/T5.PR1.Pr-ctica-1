@@ -28,7 +28,7 @@
                             <td>@sim.Date.ToString("yyyy-MM-dd")</td>
                             <td>@sim.Type</td>
                             <td>@sim.SunHours</td>
-                            <td>@sim.WindSpeed.ToString("N2")</td>
+                            <td>@((double)sim.SunHours).ToString("N2")</td>
                             <td>@sim.GeneratedEnergy.ToString("N2")</td>
                             <td>@sim.CostPerKWh.ToString("N2") €</td>
                         </tr>
@@ -44,4 +44,4 @@ else
         <p>No hi ha simulacions registrades.</p>
 }
 
-<a asp-page="AddSimulation" class="btn btn-success">Afegir Nova Simulació</a>
+<a asp-page="AddSimulationModel" class="btn btn-success">Afegir Nova Simulació</a>
