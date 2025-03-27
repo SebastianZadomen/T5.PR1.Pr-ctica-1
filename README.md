@@ -1,12 +1,12 @@
 # T5.PR1..Pr-ctica-1
 
-# Cómo se ha integrado EF Core en el proyecto y qué ha cambiado respecto a la versión anterior
+ Cómo se ha integrado EF Core en el proyecto y qué ha cambiado respecto a la versión anterior
 
 Voy a intentar explicar cómo se ha implementado Entity Framework Core (EF Core) en el proyecto `T5.PR1.Practica\_1` y qué diferencias hay con el anterior `T4.PR1.Practica\_1`. No tengo mucha experiencia, pero estoy empezando a entender cómo funciona, así que lo voy a narrar según lo veo.
 
 ---
 
-\## Cómo se ha integrado EF Core en el proyecto nuevo (`T5`)
+## Cómo se ha integrado EF Core en el proyecto nuevo (`T5`)
 
 ### 1. Configuración en `Program.cs`
 
