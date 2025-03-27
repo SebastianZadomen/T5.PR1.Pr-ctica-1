@@ -147,7 +147,7 @@ XDocument doc = XDocument.Load(rutaXML);
 
 Era un proceso manual y algo complicado. Ahora, con EF Core, solo se escribe:
 
-\```csharp
+```csharp
 
 IndicadoresEnergeticos = \_context.EnergyIndicators.ToList();
 ```
@@ -162,7 +162,7 @@ Antes, los modelos como IndicadorEnergetic tenían nombres como CDEEBC\_ProdNeta
 
 En el anterior, había clases como HydroelectricSystem que calculaban la energía y se guardaban en un CSV:
 
-\```csharp
+```csharp
 
 sistema.Simulate(Parametro);
 
@@ -171,11 +171,11 @@ SimulationDataHandler.SaveSimulation(simulacion);
 
 Ahora, eso se hace directamente en AddSimulationModel y se guarda en la base de datos:
 
-\```csharp
+```csharp
 
 Simulation.GeneratedEnergy = Simulation.Type switch { /\* Cálculo \*/ };
 
-\_context.Simulations.Add(Simulation);
+_context.Simulations.Add(Simulation);
 ```
 
 Las clases complejas ya no están, y todo parece más directo.
