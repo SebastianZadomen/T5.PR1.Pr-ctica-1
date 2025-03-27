@@ -140,9 +140,11 @@ En el anterior, para leer datos había que abrir los archivos y procesarlos manu
 var lineas = System.IO.File.ReadAllLines(CsvPath);
 
 foreach (var linea in lineas.Skip(1)) { /\* Procesar datos \*/ }
+```
 
 \\O para el XML:
 
+```csharp
 XDocument doc = XDocument.Load(rutaXML);
 ```
 
