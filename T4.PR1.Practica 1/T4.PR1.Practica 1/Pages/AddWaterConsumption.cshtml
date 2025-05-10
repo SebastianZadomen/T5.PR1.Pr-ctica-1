@@ -1,0 +1,82 @@
+﻿@page
+@model T5.PR1.Practica_1.Pages.AddWaterConsumptionModel
+@{
+    ViewData["Title"] = "Afegir Consum d'Aigua";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+
+    {
+            <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+            </div>
+    }
+
+    <form method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="Consum.Year" class="form-label">Any*</label>
+                    <input asp-for="Consum.Year" class="form-control" 
+                           min="2000" max="@(DateTime.Now.Year + 1)" required />
+                    <span asp-validation-for="Consum.Year" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Consum.Region" class="form-label">Comarca*</label>
+                    <input asp-for="Consum.Region" class="form-control" 
+                           maxlength="100" required />
+                    <span asp-validation-for="Consum.Region" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="Consum.Municipality" class="form-label">Municipi*</label>
+                    <input asp-for="Consum.Municipality" class="form-control" 
+                           maxlength="100" required />
+                    <span asp-validation-for="Consum.Municipality" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Consum.Consumption" class="form-label">Consum (m³)*</label>
+                    <input asp-for="Consum.Consumption" class="form-control" 
+                           step="0.01" min="0" required />
+                    <span asp-validation-for="Consum.Consumption" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Guardar
+            </button>
+                 <a asp-page="ShowWaterConsumptionsModel" class="btn btn-secondary ms-2">
+                <i class="fas fa-times"></i> Cancel·lar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+
+        <script>
+            (() => {
+                'use strict'
+                const forms = document.querySelectorAll('.needs-validation')
+
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+}

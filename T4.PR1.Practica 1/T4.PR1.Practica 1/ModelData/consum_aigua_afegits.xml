@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Consums>
+  <Consum>
+    <Any>2012</Any>
+    <CodiComarca>3124</CodiComarca>
+    <Comarca>vfgs</Comarca>
+    <Poblacio>2343</Poblacio>
+    <DomesticXarxa>234213</DomesticXarxa>
+    <ActivitatsEconomiques>432141</ActivitatsEconomiques>
+    <Total>334</Total>
+    <ConsumPerCapita>41233</ConsumPerCapita>
+  </Consum>
+  <Consum>
+    <Any>212</Any>
+    <CodiComarca>332333</CodiComarca>
+    <Comarca>233213</Comarca>
+    <Poblacio>31233</Poblacio>
+    <DomesticXarxa>23123</DomesticXarxa>
+    <ActivitatsEconomiques>31233</ActivitatsEconomiques>
+    <Total>313</Total>
+    <ConsumPerCapita>313</ConsumPerCapita>
+  </Consum>
+  <Consum>
+    <Any>213</Any>
+    <CodiComarca>3213</CodiComarca>
+    <Comarca>23112</Comarca>
+    <Poblacio>312</Poblacio>
+    <DomesticXarxa>3213</DomesticXarxa>
+    <ActivitatsEconomiques>321</ActivitatsEconomiques>
+    <Total>312</Total>
+    <ConsumPerCapita>321</ConsumPerCapita>
+  </Consum>
+</Consums>

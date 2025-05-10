@@ -1,0 +1,88 @@
+﻿@page
+@model T5.PR1.Practica_1.Pages.AddIndicadorEnergeModel
+@{
+    ViewData["Title"] = "Afegir Indicador Energètic";
+}
+
+<div class="container">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <form method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="NuevoIndicador.Year" class="form-label">Any</label>
+                    <input asp-for="NuevoIndicador.Year" class="form-control" 
+                           min="2000" max="@(DateTime.Now.Year + 5)" required />
+                    <span asp-validation-for="NuevoIndicador.Year" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NuevoIndicador.NetProduction" class="form-label">Producció Neta (MWh)</label>
+                    <input asp-for="NuevoIndicador.NetProduction" class="form-control" 
+                           step="0.01" min="0" required />
+                    <span asp-validation-for="NuevoIndicador.NetProduction" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="NuevoIndicador.GasolineConsumption" class="form-label">Consum Gasolina (litres)</label>
+                    <input asp-for="NuevoIndicador.GasolineConsumption" class="form-control" 
+                           step="0.01" min="0" required />
+                    <span asp-validation-for="NuevoIndicador.GasolineConsumption" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="NuevoIndicador.ElectricDemand" class="form-label">Demanda Elèctrica (MWh)</label>
+                    <input asp-for="NuevoIndicador.ElectricDemand" class="form-control" 
+                           step="0.01" min="0" required />
+                    <span asp-validation-for="NuevoIndicador.ElectricDemand" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="NuevoIndicador.AvailableProduction" class="form-label">Producció Disponible (MWh)</label>
+                    <input asp-for="NuevoIndicador.AvailableProduction" class="form-control" 
+                           step="0.01" min="0" required />
+                    <span asp-validation-for="NuevoIndicador.AvailableProduction" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary me-2">
+                <i class="fas fa-save"></i> Guardar
+            </button>
+            <a asp-page="ShowIndicadorsEnergeModel" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Tornar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+
+        <script>
+            (() => {
+                'use strict'
+                const forms = document.querySelectorAll('.needs-validation')
+
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+}

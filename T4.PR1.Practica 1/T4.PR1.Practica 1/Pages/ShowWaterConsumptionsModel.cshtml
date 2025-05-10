@@ -1,0 +1,41 @@
+﻿@page
+@model T5.PR1.Practica_1.Pages.ShowWaterConsumptionsModel
+@{
+    ViewData["Title"] = "Consums d'Aigua";
+}
+
+<h2>Consums d'Aigua</h2>
+
+@if (!Model.Consums.Any())
+{
+        <p>No hi ha dades.</p>
+}
+else
+{
+        <p>Total registres: @Model.Consums.Count</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Any</th>
+                    <th>Comarca</th>
+                    <th>Municipi</th>
+                    <th>Consum</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var c in Model.Consums)
+            {
+                    <tr>
+                        <td>@c.Year</td>
+                        <td>@c.Region</td>
+                        <td>@c.Municipality</td>
+                        <td>@c.Consumption.ToString("N2") m³</td>
+                    </tr>
+            }
+            </tbody>
+        </table>
+}
+
+<div style="margin-top: 20px;">
+    <a asp-page="/AddWaterConsumption" class="btn btn-success">Afegir Nou Consum</a>
+</div>

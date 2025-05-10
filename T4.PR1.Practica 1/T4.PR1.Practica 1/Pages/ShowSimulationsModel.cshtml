@@ -1,0 +1,47 @@
+﻿@page
+@model T5.PR1.Practica_1.Pages.ShowSimulationsModel
+@{
+    ViewData["Title"] = "Simulacions";
+}
+
+<h2>Simulacions Realitzades</h2>
+
+@if (Model.Simulations.Any())
+
+{
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Tipus</th>
+                    <th>Hores Sol</th>
+                    <th>Velocitat Vent</th>
+                    <th>Energia Generada</th>
+                    <th>Cost per kWh</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var sim in Model.Simulations)
+
+            {
+                        <tr>
+                            <td>@sim.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@sim.Type</td>
+                            <td>@sim.SunHours</td>
+                            <td>@((double)sim.SunHours).ToString("N2")</td>
+                            <td>@sim.GeneratedEnergy.ToString("N2")</td>
+                            <td>@sim.CostPerKWh.ToString("N2") €</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+        <p>Total de simulacions: @Model.Simulations.Count</p>
+}
+
+else
+
+{
+        <p>No hi ha simulacions registrades.</p>
+}
+
+<a asp-page="AddSimulationModel" class="btn btn-success">Afegir Nova Simulació</a>

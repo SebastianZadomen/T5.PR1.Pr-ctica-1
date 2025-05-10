@@ -1,0 +1,64 @@
+﻿@page
+@model T5.PR1.Practica_1.Pages.ShowIndicadorsEnergeModel
+@{
+    ViewData["Title"] = "Indicadors Energètics";
+}
+
+<h1>Indicadors Energètics</h1>
+
+<p>Total de registres: <strong>@Model.TotalRegistros</strong></p>
+
+@if (Model.TotalRegistros == 0)
+{
+        <p>No hi ha cap registre disponible.</p>
+}
+else
+{
+        <h2>Llista Completa</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Any</th>
+                    <th>Prod. Neta</th>
+                    <th>Gasolina Auto</th>
+                    <th>Demanda Elèctrica</th>
+                    <th>Prod. Disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.IndicadoresEnergeticos)
+            {
+                        <tr>
+                            <td>@item.Year</td>
+                            <td>@item.NetProduction.ToString("N2")</td>
+                            <td>@item.GasolineConsumption.ToString("N2")</td>
+                            <td>@item.ElectricDemand.ToString("N2")</td>
+                            <td>@item.AvailableProduction.ToString("N2")</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+
+        <h2>Estadístiques</h2>
+
+        <h3>Producció neta superior a 3000:</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Any</th>
+                    <th>Producció Neta</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ProdNetaMayor3000)
+            {
+                        <tr>
+                            <td>@item.Year</td>
+                            <td>@item.NetProduction.ToString("N2")</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
+
+<a asp-page="/AddIndicadorEnergeModel" class="btn btn-success">Afegir Nou Indicador</a>
